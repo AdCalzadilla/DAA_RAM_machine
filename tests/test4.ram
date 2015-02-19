@@ -1,0 +1,13 @@
+; diferencia es cero. Entonces imprime un 1 y se para.
+; Se asume que 0, 1, 2 son los £nicos s¡mbolos de entrada.
+
+                  LOAD =0
+STORE 2
+                  READ 1
+       while   :  LOAD 1
+                  JZERO endwhile
+                  LOAD 1
+                  SUB =1
+                  JZERO one
+                  LOAD 2
+

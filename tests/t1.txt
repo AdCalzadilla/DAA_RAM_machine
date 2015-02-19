@@ -1,0 +1,9 @@
+;Esto es una prueba.
+;LOAD
+;comentario
+;Algo.
+;probando
+			LOAD =0   
+	end :   STORE 2
+  while :   LOAD 2
+  			JUMP end
