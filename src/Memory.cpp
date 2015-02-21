@@ -6,12 +6,13 @@
  */
 
 #include "Memory.h"
+#include <vector>
 
 namespace std {
 
 Memory::Memory() {
 	// TODO Auto-generated constructor stub
-
+	theMemory.resize(10);
 }
 
 Memory::~Memory() {

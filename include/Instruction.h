@@ -13,18 +13,20 @@
 
 class Instruction {
 private:
-	std::string tag;
-	std::string command;
-	std::string tag2;
+	int tag;
+	int command;
+	int tag2;
 public:
-	Instruction(std::string tag,std::string comand, std::string tag2);
+	Instruction(int tag,int command, int tag2);
 	virtual ~Instruction();
-	std::string getTag();
-	std::string getCommand();
-	std::string getTag2();
-	void setTag(std::string);
-	void setCommand(std::string);
-	void setTag2(std::string);
+	int getTag();
+	int getCommand();
+	int getTag2();
+	void setTag(int);
+	void setCommand(int);
+	void setTag2(int);
+
+	Instruction& operator =(const Instruction &inst);
 };
 
 #endif /* INSTRUCTION_H_ */

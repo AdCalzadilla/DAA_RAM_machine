@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Instruction::Instruction(string tag, string command, string tag2) {
+Instruction::Instruction(int tag, int command, int tag2) {
 	// TODO Auto-generated constructor stub
 	this->tag = tag;
 	this->command= command;
@@ -20,27 +20,34 @@ Instruction::~Instruction() {
 	// TODO Auto-generated destructor stub
 }
 
-string Instruction::getTag(){
+int Instruction::getTag(){
 	return tag;
 }
 
-string Instruction::getCommand(){
+int Instruction::getCommand(){
 	return command;
 }
 
-string Instruction::getTag2(){
+int Instruction::getTag2(){
 	return tag2;
 }
 
-void Instruction::setTag(string tg){
+void Instruction::setTag(int tg){
 	tag = tg;
 }
 
-void Instruction::setCommand(string cm){
+void Instruction::setCommand(int cm){
 	command = cm;
 }
 
-void Instruction::setTag2(string tg2){
+void Instruction::setTag2(int tg2){
 	tag2 = tg2;
+}
+
+Instruction& Instruction::operator =(const Instruction &inst){
+	tag = inst.tag;
+	command = inst.command;
+	tag2 = inst.tag2;
+	return (*this);
 }
 

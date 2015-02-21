@@ -8,12 +8,17 @@
 #ifndef MEMORY_H_
 #define MEMORY_H_
 
+#include <vector>
+
 namespace std {
 
 class Memory {
+private:
+	std::vector<int>theMemory;
 public:
 	Memory();
-	virtual ~Memory();
+	~Memory();
+	void setMemory(int pos, int value);
 };
 
 } /* namespace std */
