@@ -51,7 +51,7 @@ void Program::readFile(){
 			theStringInstruction.sTag = sTag1;
 			theStringInstruction.sCommand = sCommand;
 			theStringInstruction.sTag2 = sTag2;
-			vDesensamblador.push_back(&theStringInstruction);
+			vDesensamblador.push_back(theStringInstruction);
 
 			iCommand= transformCommand(sCommand);
 			iTag2 = transformTag(sTag2);
@@ -61,8 +61,13 @@ void Program::readFile(){
 		}
 		getline(fs,miCadena);
 	}
+	//------- Hace los saltos. ---------------------------------------
+	instructionJump();
+	//------- Etiqueta HALT.   ---------------------------------------
+	lookForHalt();
 	//_______ Comentar al final, solo se usa para pruebas.____________
-	printProgram();
+	desensamblar();
+	codeProgram();
 }
 
 void Program::cleanString(string &miCadena){
@@ -78,13 +83,6 @@ void Program::cleanString(string &miCadena){
 	}
 	while((position = miCadena.find(';')) != string::npos){
 		miCadena.erase(position,miCadena.length()- position);
-	}
-}
-
-void Program::printProgram(){
-	cout << "===================================================================================\n";
-	for(int i=0;i<vInstruction.size();i++){
-		cout << "etiqueta: "<< vInstruction[i]->getTag()<<"\tcomando: "<< vInstruction[i]->getCommand()<<"\tetiqueta 2: "<<vInstruction[i]->getTag2()<<endl;
 	}
 }
 
@@ -176,10 +174,19 @@ int Program::indirectMode(string tg){
 		}
 }
 
-int Program::instructionJump(string tg){
-	string auxTg = tg;
-	auxTg.append(":");
-	return 0;
+void Program::instructionJump(){
+	string auxTg = "";
+	for(int i=0; i< vInstruction.size();i++){
+		if(vInstruction[i]->getCommand()== JUMP || vInstruction[i]->getCommand()== JGTZ || vInstruction[i]->getCommand()== JZERO){
+			auxTg = vDesensamblador[i].sTag2;
+			auxTg.append(":");
+			for(int j=0; j< vDesensamblador.size();j++){
+				if(vDesensamblador[j].sTag == auxTg){
+					vInstruction[i]->setTag2(vInstruction[j]->getTag());
+				}
+			}
+		}
+	}
 }
 
 void Program::codeProgram(){
@@ -191,13 +198,20 @@ void Program::codeProgram(){
 
 void Program::desensamblar(){
 	cout << "===================================================================================\n";
-
+	for(int i=0;i<vDesensamblador.size();i++){
+		//cout << "etiqueta: "<< vDesensamblador[i]->sTag<<"\tcomando: "<< vDesensamblador[i]->sCommand<<"\tetiqueta 2: "<<vDesensamblador[i]->sTag2<<endl;
+		cout << "etiqueta: "<< vDesensamblador[i].sTag<<"\tcomando: "<< vDesensamblador[i].sCommand<<"\tetiqueta 2: "<<vDesensamblador[i].sTag2<<endl;
+	}
 }
 
 std::vector<Instruction*>& Program::getInstruction(){
 	return vInstruction;
 }
 
-void Program::setInstruction(const std::vector<Instruction*>& instruction) {
-	vInstruction = instruction;
+void Program::lookForHalt(){
+	for(int i=0; i< vInstruction.size();i++){
+		if(vInstruction[i]->getCommand() == HALT){
+			vInstruction[i]->setTag2(-1);
+		}
+	}
 }

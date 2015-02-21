@@ -27,25 +27,24 @@ private:
 	std::string myFile;
 	std::string myProgram;;
 	std::vector<Instruction*>vInstruction;
-	std::vector<stringProgram*>vDesensamblador;
+	std::vector<stringProgram>vDesensamblador;
 
+	void readFile();
 	void cleanString(std::string&);
 	int transformCommand(std::string&);
 	int transformTag(std::string&);
 	int inmediateMode(std::string);
 	int directMode(std::string);
 	int indirectMode(std::string);
-	int instructionJump(std::string);
+	void instructionJump();
+	void lookForHalt();
 
 
 public:
 	Program();
 	virtual ~Program();
-	void readFile();
-	void printProgram();
 	void codeProgram();
 	std::vector<Instruction*>& getInstruction();
-	void setInstruction(const std::vector<Instruction*>& instruction);
 	void desensamblar();
 };
 
