@@ -8,7 +8,7 @@
 #include "Memory.h"
 #include <vector>
 
-namespace std {
+using namespace std;
 
 Memory::Memory() {
 	// TODO Auto-generated constructor stub
@@ -19,4 +19,14 @@ Memory::~Memory() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */
+void Memory::setMemory(int pos,int value){
+	theMemory[pos] = value;
+}
+
+int Memory::getMemory(int i){
+	return theMemory[i];
+}
+
+int Memory::size(){
+	return theMemory.size();
+}

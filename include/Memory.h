@@ -8,6 +8,7 @@
 #ifndef MEMORY_H_
 #define MEMORY_H_
 
+#include <iostream>
 #include <vector>
 
 namespace std {
@@ -19,6 +20,8 @@ public:
 	Memory();
 	~Memory();
 	void setMemory(int pos, int value);
+	int getMemory(int);
+	int size();
 };
 
 } /* namespace std */

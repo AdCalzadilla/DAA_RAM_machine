@@ -17,9 +17,35 @@ class UC {
 private:
 	Memory myMemory;
 	Program myProgram;
+	vector<int>into;
+	vector<int>out;
+	bool trace;
+	bool checkRegister(int, int);
+	vector<Instruction*>programInstruction;
+
+	void write(int pos, int value);
+
 public:
 	UC();
 	~UC();
+	bool getTrace();
+	void setTrace(bool);
+	void run();
+
+	//funciones de intrucciones.
+	//--------------------------
+	void funcLOAD(int);
+	void funcSTORE(int);
+	void funcADD(int);
+	void funcSUB(int);
+	void funcMULT(int);
+	void funcDIV(int);
+	void funcREAD(int);
+	void funcWRITE(int);
+	int funcJUMP(int);
+	int funcJGTZ(int);
+	int funcJZERO(int);
+	int funcHALT();
 };
 
 } /* namespace std */
