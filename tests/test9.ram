@@ -1,0 +1,18 @@
+;Pruebas para la multiplicación. Sin comprobaciones de espacio.
+
+	LOAD =2
+	STORE 1
+	LOAD =2
+	MULT 1
+	STORE 2
+;En STORE 2 debe haber un 4.
+	LOAD =3
+	MULT 1
+	STORE 8
+;En este caso debe guardar en el STORE 8 un 6.
+	LOAD =2
+	STORE 6
+	LOAD 2
+	MULT *8
+	STORE 3
+;En este caso en STORE 3 debe haber un 8.

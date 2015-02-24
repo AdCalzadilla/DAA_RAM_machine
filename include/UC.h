@@ -18,20 +18,21 @@ private:
 	Memory myMemory;
 	Program myProgram;
 	vector<int>into;
-	vector<int>out;
+	vector<int>vOut;
+	string myRoute;
+	string inFile;
 	bool trace;
-	bool checkRegister(int, int);
+	bool checkRegister(int);
+	bool checkPosition(int);
 	vector<Instruction*>programInstruction;
 
 	void write(int pos, int value);
-
-public:
-	UC();
-	~UC();
+	void readInFile();
+	void createOutFile();
+	void printMenu();
+	void menu();
 	bool getTrace();
 	void setTrace(bool);
-	void run();
-
 	//funciones de intrucciones.
 	//--------------------------
 	void funcLOAD(int);
@@ -46,6 +47,15 @@ public:
 	int funcJGTZ(int);
 	int funcJZERO(int);
 	int funcHALT();
+
+public:
+	UC();
+	~UC();
+	void run();
+	void printMemory();
+	void printTapeIn();
+	void printTapeOut();
+
 };
 
 } /* namespace std */

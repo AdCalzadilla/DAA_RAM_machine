@@ -1,0 +1,10 @@
+;Prueba con LOAD y STORE.
+
+     LOAD=5
+     STORE 6
+     LOAD =4
+     STORE 1
+     LOAD 6
+     STORE *1
+    ;DEBE GUARDARSE EN EL 4 UN 5.
+

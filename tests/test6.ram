@@ -1,4 +1,3 @@
-cogelo.
                   LOAD =0
 				  STORE 2
                   READ 1
@@ -22,3 +21,5 @@ cogelo.
                   JUMP end
       output   :  WRITE =1
          end   :  HALT
+
+

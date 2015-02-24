@@ -1,0 +1,14 @@
+;Pruebas con ADD, SUB, DIV...
+	LOAD = 4
+	ADD =1
+	STORE 1
+	LOAD = 3
+	ADD 1
+	STORE 2
+; En STORE 2 debe haber un 8
+       LOAD =1
+       STORE 8
+       ADD *2
+       STORE 3
+; En STORE 3 debe haber un 2
+

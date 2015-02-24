@@ -13,6 +13,9 @@ using namespace std;
 Memory::Memory() {
 	// TODO Auto-generated constructor stub
 	theMemory.resize(10);
+	for(int i=0; i< theMemory.size();i++){
+		theMemory[i]= 0;
+	}
 }
 
 Memory::~Memory() {
@@ -30,3 +33,4 @@ int Memory::getMemory(int i){
 int Memory::size(){
 	return theMemory.size();
 }
+

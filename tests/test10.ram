@@ -1,0 +1,16 @@
+;Pruebas para el comando DIV. Sin comprobaciones de espacio.
+
+	LOAD = 8
+	DIV =2
+	STORE 1
+;En STORE 1 debe haber un 4.
+	LOAD =8
+        DIV 1
+        STORE 8
+;En este caso debe guardar en el STORE 8 un 2.
+        LOAD =3
+        STORE 2
+        LOAD =9
+        DIV *8
+        STORE 3
+;En este caso en STORE 3 debe haber un 3.

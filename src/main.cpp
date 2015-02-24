@@ -4,13 +4,13 @@
  *  Created on: 7/2/2015
  *      Author: Adrian
  */
-#include "Program.h"
+#include "UC.h"
 
 using namespace std;
 
 int main(){
 
-	Program prove;
+	UC ram;
 
 }
 

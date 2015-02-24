@@ -65,9 +65,11 @@ void Program::readFile(){
 	instructionJump();
 	//------- Etiqueta HALT.   ---------------------------------------
 	lookForHalt();
+	//------- Cerrar el fichero. -------------------------------------
+	fs.close();
 	//_______ Comentar al final, solo se usa para pruebas.____________
-	desensamblar();
-	codeProgram();
+	//desensamblar();
+	//codeProgram();
 }
 
 void Program::cleanString(string &miCadena){
@@ -197,7 +199,7 @@ void Program::codeProgram(){
 }
 
 void Program::desensamblar(){
-	cout << "===================================================================================\n";
+	cout << "===================== Desensamblar =================================================\n";
 	for(int i=0;i<vDesensamblador.size();i++){
 		//cout << "etiqueta: "<< vDesensamblador[i]->sTag<<"\tcomando: "<< vDesensamblador[i]->sCommand<<"\tetiqueta 2: "<<vDesensamblador[i]->sTag2<<endl;
 		cout << "etiqueta: "<< vDesensamblador[i].sTag<<"\tcomando: "<< vDesensamblador[i].sCommand<<"\tetiqueta 2: "<<vDesensamblador[i].sTag2<<endl;

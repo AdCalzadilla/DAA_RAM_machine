@@ -1,0 +1,14 @@
+; Pruebas con sub.
+     LOAD =9
+     SUB =6
+     STORE 1
+     LOAD = 5
+     SUB 1
+     STORE 2
+;Debe guardar en STORE 2 un 2
+	LOAD =1
+	STORE 9
+	LOAD = 8
+	SUB *9
+	STORE 3
+;Debe dar como resultado un 5 en el STORE 3

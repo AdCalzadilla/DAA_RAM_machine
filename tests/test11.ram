@@ -1,0 +1,29 @@
+;Pruebas JUMP, JGTZ
+	LOAD =1
+        STORE 1
+	JUMP salto
+        LOAD =5
+	STORE 3
+  salto: ADD =1 
+        STORE 2
+;En STORE 2 debe haber un 2.
+	LOAD = 5
+	STORE 5
+	LOAD = 4
+while:	SUB =2
+	STORE 4
+	JGTZ while
+; En STORE 4 debe haber un 2 y en STORE 5 debe haber un 0.
+	LOAD =5
+	STORE 3
+	SUB =5
+	STORE 3
+	JZERO bye
+	LOAD =9
+	STORE 6
+bye:	ADD =1
+	STORE 4
+	HALT
+; En STORE 4 debe haber un 1.
+	 
+	
