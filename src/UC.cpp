@@ -14,6 +14,7 @@ enum Code{LOAD=0,STORE,ADD,SUB,MULT,DIV,READ,WRITE,JUMP,JGTZ,JZERO,HALT};
 UC::UC() {
 	// TODO Auto-generated constructor stub
 	trace = false;
+	inRange = true;
 	into.resize(50);
 	myRoute = "";
 
@@ -65,7 +66,7 @@ void UC::createOutFile(){
 }
 
 bool UC::checkRegister(int value){
-	if(value < 0 || value > 99){
+	if(value < 0 || value > 9){
 		cout<< "Desbordamiento en los registros de la memoria."<< value << endl;
 		return false;
 	}
@@ -140,6 +141,9 @@ void UC::run(){
 			cin >> wait;
 		}
 		i++;
+		if(inRange==false){
+			i = -1;
+		}
 	}
 	//printMemory();
 }
@@ -151,6 +155,9 @@ void UC::funcLOAD(int instruc){
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 30){
 		auxInt = programInstruction[instruc]->getTag2() - 20;
@@ -159,6 +166,12 @@ void UC::funcLOAD(int instruc){
 			if(checkRegister(auxInt)){
 				myMemory.setMemory(0,auxInt);
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
@@ -170,38 +183,18 @@ void UC::funcLOAD(int instruc){
 				if(checkRegister(auxInt)){
 					myMemory.setMemory(0,auxInt);
 				}
-			}
-		}
-	}
-
-	else if(programInstruction[instruc]->getTag2() > 99 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2() -100;
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkRegister(auxInt)){
-				myMemory.setMemory(0,auxInt);
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				if(checkRegister(auxInt)){
-					myMemory.setMemory(0,auxInt);
+				else{
+					inRange= false;
 				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
-
 }
 
 void UC::funcSTORE(int instruc){
@@ -214,6 +207,9 @@ void UC::funcSTORE(int instruc){
 			value = myMemory.getMemory(0);
 			myMemory.setMemory(auxInt,value);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
 		auxInt = programInstruction[instruc]->getTag2() - 30;
@@ -223,23 +219,12 @@ void UC::funcSTORE(int instruc){
 				value = myMemory.getMemory(0);
 				myMemory.setMemory(auxInt,value);
 			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 200 && programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			value = myMemory.getMemory(0);
-			myMemory.setMemory(auxInt,value);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				value = myMemory.getMemory(0);
-				myMemory.setMemory(auxInt,value);
+			else{
+				inRange= false;
 			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 }
@@ -252,14 +237,23 @@ void UC::funcADD(int instruc){
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 30){
 		auxInt = programInstruction[instruc]->getTag2() - 20;
 		if(checkPosition(auxInt)){
 			auxInt = myMemory.getMemory(auxInt) + myMemory.getMemory(0);
 		}
+		else{
+			inRange= false;
+		}
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
@@ -272,36 +266,16 @@ void UC::funcADD(int instruc){
 				if(checkRegister(auxInt)){
 					myMemory.setMemory(0,auxInt);
 				}
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 100 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2() -100;
-		auxInt = auxInt + myMemory.getMemory(0);
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt) + myMemory.getMemory(0);
-		}
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				auxInt = auxInt + myMemory.getMemory(0);
-				if(checkRegister(auxInt)){
-					myMemory.setMemory(0,auxInt);
+				else{
+					inRange= false;
 				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 }
@@ -314,6 +288,9 @@ void UC::funcSUB(int instruc){
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 30){
 		auxInt = programInstruction[instruc]->getTag2() - 20;
@@ -322,6 +299,12 @@ void UC::funcSUB(int instruc){
 			if(checkRegister(auxInt)){
 				myMemory.setMemory(0,auxInt);
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
@@ -334,36 +317,16 @@ void UC::funcSUB(int instruc){
 				if(checkRegister(auxInt)){
 					myMemory.setMemory(0,auxInt);
 				}
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 100 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2() -100;
-		auxInt = myMemory.getMemory(0)- auxInt;
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(0) - myMemory.getMemory(auxInt);
-			if(checkRegister(auxInt)){
-				myMemory.setMemory(0,auxInt);
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				auxInt = myMemory.getMemory(0) - auxInt;
-				if(checkRegister(auxInt)){
-					myMemory.setMemory(0,auxInt);
+				else{
+					inRange= false;
 				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 }
@@ -376,6 +339,9 @@ void UC::funcMULT(int instruc){
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 30){
 		auxInt = programInstruction[instruc]->getTag2() - 20;
@@ -384,6 +350,12 @@ void UC::funcMULT(int instruc){
 			if(checkRegister(auxInt)){
 				myMemory.setMemory(0,auxInt);
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
@@ -396,36 +368,16 @@ void UC::funcMULT(int instruc){
 				if(checkRegister(auxInt)){
 					myMemory.setMemory(0,auxInt);
 				}
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 100 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2() -100;
-		auxInt = auxInt * myMemory.getMemory(0);
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt) * myMemory.getMemory(0);
-			if(checkRegister(auxInt)){
-				myMemory.setMemory(0,auxInt);
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				auxInt = auxInt * myMemory.getMemory(0);
-				if(checkRegister(auxInt)){
-					myMemory.setMemory(0,auxInt);
+				else{
+					inRange= false;
 				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 }
@@ -437,9 +389,15 @@ void UC::funcDIV(int instruc){     //DIVISION POR 0.
 		if(auxInt == 0){
 			cout << "ERROR al dividir por 0."<<endl;
 		}
+		else{
+			inRange= false;
+		}
 		auxInt = myMemory.getMemory(0)/auxInt;
 		if(checkRegister(auxInt)){
 			myMemory.setMemory(0,auxInt);
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 30){
@@ -448,10 +406,19 @@ void UC::funcDIV(int instruc){     //DIVISION POR 0.
 			if(myMemory.getMemory(auxInt)== 0){
 				cout << "ERROR al dividir por 0."<< endl;
 			}
+			else{
+				inRange= false;
+			}
 			auxInt = myMemory.getMemory(0) / myMemory.getMemory(auxInt);
 			if(checkRegister(auxInt)){
 				myMemory.setMemory(0,auxInt);
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
@@ -463,49 +430,23 @@ void UC::funcDIV(int instruc){     //DIVISION POR 0.
 				if(auxInt == 0){
 					cout << "ERROR al dividir por 0."<<endl;
 				}
-				auxInt = myMemory.getMemory(0)/auxInt;
-				if(checkRegister(auxInt)){
-					myMemory.setMemory(0,auxInt);
-				}
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 100 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2() -100;
-		if(auxInt == 0){
-			cout << "ERROR al dividir por 0."<<endl;
-		}
-		auxInt = myMemory.getMemory(0)/auxInt;
-		if(checkRegister(auxInt)){
-			myMemory.setMemory(0,auxInt);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2() - 200;
-		if(checkPosition(auxInt)){
-			if(myMemory.getMemory(auxInt)== 0){
-				cout << "ERROR al dividir por 0."<< endl;
-			}
-			auxInt = myMemory.getMemory(0) / myMemory.getMemory(auxInt);
-			if(checkRegister(auxInt)){
-				myMemory.setMemory(0,auxInt);
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				if(auxInt == 0){
-					cout << "ERROR al dividir por 0."<<endl;
+				else{
+					inRange= false;
 				}
 				auxInt = myMemory.getMemory(0)/auxInt;
 				if(checkRegister(auxInt)){
 					myMemory.setMemory(0,auxInt);
 				}
+				else{
+					inRange= false;
+				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
 }
@@ -519,38 +460,31 @@ void UC::funcREAD(int instruc){
 		if(checkPosition(auxInt) && checkRegister(value)){
 			myMemory.setMemory(auxInt,value);
 		}
+		else{
+			inRange= false;
+		}
 	}
 	else if(programInstruction[instruc]->getTag2() < 40){
 		auxInt = programInstruction[instruc]->getTag2() - 30;
 		if(checkPosition(auxInt)){
 			auxInt = myMemory.getMemory(auxInt);
 			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
+				//auxInt = myMemory.getMemory(auxInt);
 				if(checkRegister(value)){
 					myMemory.setMemory(auxInt,value);
 				}
-			}
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() >= 200 && programInstruction[instruc]->getTag2() < 300){
-		auxInt = programInstruction[instruc]->getTag2()-20;
-		if(checkPosition(auxInt) && checkRegister(value)){
-			myMemory.setMemory(auxInt,value);
-		}
-	}
-	else if(programInstruction[instruc]->getTag2() < 400){
-		auxInt = programInstruction[instruc]->getTag2() - 300;
-		if(checkPosition(auxInt)){
-			auxInt = myMemory.getMemory(auxInt);
-			if(checkPosition(auxInt)){
-				auxInt = myMemory.getMemory(auxInt);
-				if(checkRegister(value)){
-					myMemory.setMemory(auxInt,value);
+				else{
+					inRange= false;
 				}
 			}
+			else{
+				inRange= false;
+			}
+		}
+		else{
+			inRange= false;
 		}
 	}
-
 }
 
 void UC::funcWRITE(int instruc){
@@ -562,12 +496,8 @@ void UC::funcWRITE(int instruc){
 			fs << auxInt<< endl;
 			vOut.push_back(auxInt);
 		}
-	}
-	if(programInstruction[instruc]->getTag2() >= 100 && programInstruction[instruc]->getTag2() < 200){
-		auxInt = programInstruction[instruc]->getTag2()-100;
-		if(checkRegister(auxInt)){
-			fs << auxInt<< endl;
-			vOut.push_back(auxInt);
+		else{
+			inRange= false;
 		}
 	}
 	/*else if(programInstruction[instruc]->getTag2() < 40){
@@ -654,6 +584,7 @@ void UC::menu(){
 			printMemory();
 			cout<<"\nPusle cualquier tecla para continuar."<<endl;
 			cin >> wait;
+			//getchar();
 			break;
 		case 't':
 			setTrace(true);

@@ -69,7 +69,7 @@ void Program::readFile(){
 	fs.close();
 	//_______ Comentar al final, solo se usa para pruebas.____________
 	//desensamblar();
-	//codeProgram();
+	codeProgram();
 }
 
 void Program::cleanString(string &miCadena){

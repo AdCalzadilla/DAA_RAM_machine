@@ -22,6 +22,7 @@ private:
 	string myRoute;
 	string inFile;
 	bool trace;
+	bool inRange;
 	bool checkRegister(int);
 	bool checkPosition(int);
 	vector<Instruction*>programInstruction;

@@ -26,7 +26,7 @@ condition:LOAD =6
           LOAD 1
           STORE 2
           LOAD *2
-          MULT *2
+          ADD *2
           STORE *2
           LOAD 1
           ADD =1
